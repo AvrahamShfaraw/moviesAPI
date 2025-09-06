@@ -1,0 +1,14 @@
+const UserActionLog = require("../models/UserActionLog");
+
+const getAllActionLogs = async (req, res) => {
+    try {
+        const logs = await UserActionLog.find()
+            .sort({ createdAt: -1 }) // newest first
+            .limit(1000); // limit to 1000 for performance
+        res.json(logs);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+module.exports = { getAllActionLogs };
